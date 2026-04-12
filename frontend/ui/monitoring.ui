@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MonitoringWindow</class>
+ <widget class="QMainWindow" name="MonitoringWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1280</width><height>820</height></rect></property>
+  <property name="windowTitle"><string>Security Logs &amp; Analytics</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Security Logs &amp; Analytics</string></property></widget></item>
+       <item>
+        <widget class="QTabWidget" name="monitoringTabs">
+         <widget class="QWidget" name="logsTab">
+          <attribute name="title"><string>Activity Logs</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_3"><item><widget class="QListWidget" name="activityList"/></item></layout>
+         </widget>
+         <widget class="QWidget" name="alertsTab">
+          <attribute name="title"><string>Security Alerts</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4"><item><widget class="QListWidget" name="alertList"/></item></layout>
+         </widget>
+         <widget class="QWidget" name="analyticsTab">
+          <attribute name="title"><string>Analytics</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5"><item><widget class="QTextEdit" name="analyticsText"><property name="plainText"><string>Encryption operations, active users, blocked threats, uptime, operation distribution, and system health.</string></property></widget></item></layout>
+         </widget>
+        </widget>
+       </item>
+       <item><widget class="QPushButton" name="backButton"><property name="text"><string>Back to Dashboard</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

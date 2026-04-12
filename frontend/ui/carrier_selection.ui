@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CarrierWindow</class>
+ <widget class="QMainWindow" name="CarrierWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1200</width><height>780</height></rect></property>
+  <property name="windowTitle"><string>Carrier Selection</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Carrier Selection</string></property></widget></item>
+       <item><widget class="QFrame" name="card">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0"><widget class="QRadioButton" name="audioCarrier"><property name="text"><string>Audio Carrier (WAV, MP3, FLAC)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="0" column="1"><widget class="QRadioButton" name="imageCarrier"><property name="text"><string>Image Carrier (PNG, JPEG, BMP)</string></property></widget></item>
+          <item row="1" column="0"><widget class="QRadioButton" name="videoCarrier"><property name="text"><string>Video Carrier (MP4, AVI, MKV)</string></property></widget></item>
+          <item row="1" column="1"><widget class="QRadioButton" name="fileCarrier"><property name="text"><string>Binary File Carrier (ZIP, PDF, DOCX)</string></property></widget></item>
+         </layout>
+       </widget></item>
+       <item><widget class="QPushButton" name="backButton"><property name="text"><string>Back to Dashboard</string></property></widget></item>
+       <item>
+        <widget class="QFrame" name="card">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item><widget class="QLabel" name="carrierLabel"><property name="text"><string>Carrier Technical Details</string></property></widget></item>
+          <item><widget class="QListWidget" name="carrierDetailList"/></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

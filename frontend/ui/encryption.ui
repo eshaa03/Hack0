@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EncryptionWindow</class>
+ <widget class="QMainWindow" name="EncryptionWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1220</width><height>800</height></rect></property>
+  <property name="windowTitle"><string>Encryption Control</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Encryption Control</string></property></widget></item>
+       <item><widget class="QFrame" name="card">
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0"><widget class="QLabel" name="labelAlgo"><property name="text"><string>Algorithm</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="algorithmCombo"><item><property name="text"><string>AES-256-GCM</string></property></item><item><property name="text"><string>AES-192-GCM</string></property></item><item><property name="text"><string>AES-128-GCM</string></property></item></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="labelKey"><property name="text"><string>Key Size</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="keySizeCombo"><item><property name="text"><string>256</string></property></item><item><property name="text"><string>192</string></property></item><item><property name="text"><string>128</string></property></item></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="labelAuth"><property name="text"><string>Auth Tag</string></property></widget></item>
+          <item row="2" column="1"><widget class="QCheckBox" name="authCheck"><property name="text"><string>Enable Authentication Tag</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="labelRsa"><property name="text"><string>RSA Protection</string></property></widget></item>
+          <item row="3" column="1"><widget class="QCheckBox" name="rsaCheck"><property name="text"><string>Enable RSA Key Protection</string></property><property name="checked"><bool>true</bool></property></widget></item>
+         </layout>
+       </widget></item>
+       <item><widget class="QProgressBar" name="progressBar"><property name="value"><number>0</number></property></widget></item>
+       <item>
+        <widget class="QFrame" name="card">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item><widget class="QLabel" name="pipelineLabel"><property name="text"><string>Encryption Pipeline</string></property></widget></item>
+          <item><widget class="QListWidget" name="pipelineList"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item><widget class="QLabel" name="statusLabel"><property name="text"><string>Ready to encrypt.</string></property></widget></item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item><widget class="QPushButton" name="backButton"><property name="text"><string>Back to Dashboard</string></property></widget></item>
+         <item><widget class="QPushButton" name="startButton"><property name="text"><string>Start Encryption</string></property></widget></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

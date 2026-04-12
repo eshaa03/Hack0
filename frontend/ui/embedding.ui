@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EmbeddingWindow</class>
+ <widget class="QMainWindow" name="EmbeddingWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1280</width><height>820</height></rect></property>
+  <property name="windowTitle"><string>Embedding</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Embedding</string></property></widget></item>
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <widget class="QWidget" name="audioTab">
+          <attribute name="title"><string>Audio</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_3"><item><widget class="QTextEdit" name="audioSummary"><property name="plainText"><string>Audio carrier loading, embedding strength, waveform process steps, and download actions.</string></property></widget></item></layout>
+         </widget>
+         <widget class="QWidget" name="imageTab">
+          <attribute name="title"><string>Image</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4"><item><widget class="QTextEdit" name="imageSummary"><property name="plainText"><string>Image carrier upload, LSB/DCT/DWT method, bit-plane controls, quality metrics and output.</string></property></widget></item></layout>
+         </widget>
+         <widget class="QWidget" name="videoTab">
+          <attribute name="title"><string>Video</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5"><item><widget class="QTextEdit" name="videoSummary"><property name="plainText"><string>Frame interval embedding, progress pipeline, reconstructed output and verification metrics.</string></property></widget></item></layout>
+         </widget>
+         <widget class="QWidget" name="fileTab">
+          <attribute name="title"><string>File</string></attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_6"><item><widget class="QTextEdit" name="fileSummary"><property name="plainText"><string>Binary carrier embedding methods, integrity checks, and downloadable embedded file.</string></property></widget></item></layout>
+         </widget>
+        </widget>
+       </item>
+       <item><widget class="QPushButton" name="backButton"><property name="text"><string>Back to Dashboard</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

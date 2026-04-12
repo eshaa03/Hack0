@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BiometricWindow</class>
+ <widget class="QMainWindow" name="BiometricWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1080</width><height>760</height></rect></property>
+  <property name="windowTitle"><string>Biometric Verification</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QFrame" name="card">
+         <property name="minimumSize"><size><width>560</width><height>0</height></size></property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Biometric Verification</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item>
+          <item><widget class="QLabel" name="subTitleLabel"><property name="text"><string>Authenticate using your fingerprint</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item>
+          <item><widget class="QProgressBar" name="scanProgress"><property name="value"><number>0</number></property></widget></item>
+          <item><widget class="QLabel" name="statusLabel"><property name="text"><string>Place your finger on the scanner.</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item><widget class="QPushButton" name="scanButton"><property name="text"><string>Start Scan</string></property></widget></item>
+            <item><widget class="QPushButton" name="continueButton"><property name="text"><string>Continue</string></property></widget></item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

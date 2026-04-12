@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DataEntryWindow</class>
+ <widget class="QMainWindow" name="DataEntryWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>820</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Send Data: Encrypt &amp; Encode</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       
+       <!-- Data Input Section -->
+       <item>
+        <widget class="QLabel" name="titleLabel">
+         <property name="text"><string>Step 1: Confidential Data Entry</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="dataTextEdit">
+         <property name="placeholderText"><string>Enter text to be encrypted here...</string></property>
+         <property name="maximumHeight"><number>100</number></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="fileButton">
+         <property name="text"><string>Attach File / Document</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="encryptButton">
+         <property name="text"><string>Encrypt Data (AES-GCM)</string></property>
+         <property name="styleSheet"><string>background-color: #dc3545; color: white; font-weight: bold;</string></property>
+        </widget>
+       </item>
+       
+       <!-- Hidden Crypto Details -->
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout1">
+            <item><widget class="QLabel" name="hashTitle"><property name="text"><string>Hash:</string></property></widget></item>
+            <item><widget class="QLabel" name="keyHashLabel"><property name="text"><string>N/A</string></property></widget></item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="encryptedHexEdit">
+           <property name="readOnly"><bool>true</bool></property>
+           <property name="placeholderText"><string>Encrypted Binary output (Hex) will appear here...</string></property>
+           <property name="maximumHeight"><number>60</number></property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QLabel" name="rsaTitle">
+         <property name="text"><string>RSA Key Pair Generated:</string></property>
+         <property name="styleSheet"><string>color: gray; font-size: 10px;</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="rsaTextEdit">
+           <property name="readOnly"><bool>true</bool></property>
+           <property name="placeholderText"><string>RSA Public &amp; Private Keys will appear here...</string></property>
+           <property name="maximumHeight"><number>60</number></property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation"><enum>Qt::Horizontal</enum></property>
+        </widget>
+       </item>
+
+       <!-- Encoding Section -->
+       <item>
+        <widget class="QLabel" name="encodeTitle">
+         <property name="text"><string>Step 2: Generate Payload</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="encodingCombo">
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="generateButton">
+         <property name="text"><string>Generate Encoding</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="qrPreview">
+         <property name="text"><string>Preview generating...</string></property>
+         <property name="alignment"><set>Qt::AlignCenter</set></property>
+         <property name="minimumHeight"><number>200</number></property>
+        </widget>
+       </item>
+
+       <!-- Steganography Section -->
+       <item>
+        <widget class="QPushButton" name="embedButton">
+         <property name="text"><string>Step 3: Embed inside Carrier Image/Audio</string></property>
+         <property name="styleSheet"><string>background-color: #ffc107; color: black; font-weight: bold;</string></property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value"><number>0</number></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="statusLabel">
+         <property name="text"><string>Ready for input.</string></property>
+        </widget>
+       </item>
+       
+       <!-- Navigation -->
+       <item>
+        <widget class="QPushButton" name="qrButton">
+         <property name="text"><string>Finish -&gt; Share Carrier</string></property>
+         <property name="styleSheet"><string>background-color: #28a745; color: white; font-weight: bold;</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="backButton">
+         <property name="text"><string>Back to Dashboard</string></property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

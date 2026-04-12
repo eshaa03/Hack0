@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DashboardWindow</class>
+ <widget class="QMainWindow" name="DashboardWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1280</width><height>820</height></rect></property>
+  <property name="windowTitle"><string>Command Dashboard</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Command Dashboard</string></property></widget></item>
+       <item><widget class="QLabel" name="subTitleLabel"><property name="text"><string>System modules, telemetry, and recent secure operations</string></property></widget></item>
+       
+       <item>
+        <widget class="QFrame" name="primaryActionsFrame">
+         <layout class="QHBoxLayout" name="primaryActionsLayout">
+          <item><widget class="QPushButton" name="dataEntryButton"><property name="text"><string>Send Data (Encrypt &amp; Embed)</string></property></widget></item>
+          <item><widget class="QPushButton" name="recoveryButton"><property name="text"><string>Receive Data (Extract &amp; Decrypt)</string></property></widget></item>
+          <item><widget class="QPushButton" name="monitoringButton"><property name="text"><string>Standalone QR Tool</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QFrame" name="adminActionsFrame">
+         <layout class="QHBoxLayout" name="adminActionsLayout">
+          <item><spacer><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QFrame" name="card">
+         <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>1</verstretch>
+            </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="labelStats">
+            <property name="text"><string>System Stats</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="statsTable">
+            <property name="columnCount"><number>3</number></property>
+            <property name="rowCount"><number>0</number></property>
+            <column><property name="text"><string>Metric</string></property></column>
+            <column><property name="text"><string>Value</string></property></column>
+            <column><property name="text"><string>Trend</string></property></column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="card_bottom">
+         <property name="maximumSize">
+            <size>
+               <width>16777215</width>
+               <height>150</height>
+            </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item><widget class="QLabel" name="labelRecent"><property name="text"><string>Recent Activity</string></property></widget></item>
+          <item><widget class="QListWidget" name="recentActivityList"/></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

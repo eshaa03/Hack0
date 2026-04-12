@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RecoveryWindow</class>
+ <widget class="QMainWindow" name="RecoveryWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1240</width><height>820</height></rect></property>
+  <property name="windowTitle"><string>Recovery</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item><widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Recovery Pipeline</string></property></widget></item>
+       <item><widget class="QLabel" name="subTitleLabel"><property name="text"><string>Carrier Loading → Signal Detection → Extraction &amp; Decryption</string></property></widget></item>
+       <item><widget class="QFrame" name="card">
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0"><widget class="QLabel" name="labelCarrier"><property name="text"><string>Carrier File</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayoutCarrier">
+            <item><widget class="QLineEdit" name="carrierFileInput"><property name="placeholderText"><string>carrier_audio.wav</string></property></widget></item>
+            <item><widget class="QPushButton" name="btnBrowseCarrier"><property name="text"><string>Browse...</string></property></widget></item>
+           </layout>
+          </item>
+          <item row="1" column="0"><widget class="QLabel" name="labelPayload"><property name="text"><string>Paste Raw Hex Payload</string></property></widget></item>
+          <item row="1" column="1">
+            <widget class="QPlainTextEdit" name="rawPayloadInput">
+             <property name="placeholderText"><string>If you have raw extracted Hex payload (e.g. from Standalone QR), paste it here to skip carrier extraction...</string></property>
+             <property name="maximumHeight"><number>60</number></property>
+            </widget>
+          </item>
+          <item row="2" column="0"><widget class="QLabel" name="labelSensitivity"><property name="text"><string>Detection Sensitivity</string></property></widget></item>
+          <item row="2" column="1"><widget class="QSlider" name="sensitivitySlider"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="value"><number>75</number></property></widget></item>
+          <item row="3" column="0"><widget class="QPushButton" name="btnLoadKey"><property name="text"><string>Load Private Key (.pem)</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLabel" name="rsaKeyStatus"><property name="text"><string>No key loaded</string></property><property name="styleSheet"><string>color: red; font-weight: bold;</string></property></widget></item>
+         </layout>
+       </widget></item>
+       <item><widget class="QProgressBar" name="progressBar"><property name="value"><number>0</number></property></widget></item>
+       <item>
+        <widget class="QFrame" name="card">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item><widget class="QLabel" name="pipelineLabel"><property name="text"><string>Recovery Pipeline</string></property></widget></item>
+          <item><widget class="QListWidget" name="pipelineList"/></item>
+          <item><widget class="QLabel" name="previewLabel"><property name="text"><string>Recovered Data Preview</string></property></widget></item>
+          <item><widget class="QPlainTextEdit" name="previewText"><property name="plainText"><string>CLASSIFIED COMMUNICATION
+=======================
+Mission Status: Complete
+Security Level: MAXIMUM
+Verification: PASSED
+[Additional data...]</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item><widget class="QLabel" name="statusLabel"><property name="text"><string>Ready for extraction and decryption.</string></property></widget></item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item><widget class="QPushButton" name="backButton"><property name="text"><string>Back to Dashboard</string></property></widget></item>
+         <item><widget class="QPushButton" name="processButton"><property name="text"><string>Extract &amp; Decrypt Data</string></property></widget></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

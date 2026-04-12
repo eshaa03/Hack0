@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProfileWindow</class>
+ <widget class="QMainWindow" name="ProfileWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1080</width>
+    <height>760</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Hack0 - My Profile</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="rootPanel">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QFrame" name="card">
+         <property name="minimumSize">
+          <size>
+           <width>480</width>
+           <height>0</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="titleLabel">
+            <property name="text"><string>My Profile Settings</string></property>
+            <property name="alignment"><set>Qt::AlignCenter</set></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="statusLabel">
+            <property name="text"><string>Update your personal info</string></property>
+            <property name="alignment"><set>Qt::AlignCenter</set></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="usernameLabel">
+            <property name="text"><string>Username: </string></property>
+            <property name="styleSheet"><string>font-size: 16px; font-weight: bold; margin-bottom: 5px;</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="passwordInput">
+            <property name="placeholderText"><string>New Password (Optional)</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="phoneInput">
+            <property name="placeholderText"><string>Phone Number (for SMS)</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="emailInput">
+            <property name="placeholderText"><string>Email Address</string></property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="registerBiometricButton">
+              <property name="text"><string>Register Biometrics</string></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="updateProfileButton">
+              <property name="text"><string>Update Profile</string></property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="backButton">
+            <property name="text"><string>Back to Dashboard</string></property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
