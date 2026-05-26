@@ -16,5 +16,7 @@ class SessionData:
         self.public_pem = None
         self.data_hash = None
         self.encoded_output_path = None
+        self.payload_package = None
+        self.encryption_mode = None
 
 session = SessionData()

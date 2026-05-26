@@ -87,7 +87,12 @@ class ProfileWindow(BaseWindow):
             QMessageBox.warning(self, "Weak Password", "Your new password must be at least 6 characters long.")
             return
         
-        success = auth_manager.update_my_profile(self.username, phone, email, new_password)
+        try:
+            success = auth_manager.update_my_profile(self.username, phone, email, new_password)
+        except ValueError as e:
+            self.statusLabel.setText(str(e))
+            QMessageBox.warning(self, "Validation Error", str(e))
+            return
         if success:
             self.statusLabel.setText("Profile updated successfully.")
             msg = "Your profile has been updated."
@@ -141,15 +146,20 @@ class ProfileWindow(BaseWindow):
         
         if len(faces_data) > 0:
             self.recognizer.train(faces_data, np.array(labels))
-            model_path = os.path.join(os.path.dirname(__file__), "..", "..", "backend", f"{self.username}_face.yml")
-            self.recognizer.save(model_path)
+            import tempfile
+            fd, temp_path = tempfile.mkstemp(suffix=".yml")
+            os.close(fd)
+            self.recognizer.save(temp_path)
+            with open(temp_path, "rb") as f:
+                blob = f.read()
+            os.remove(temp_path)
             
-            # Update user's biometric availability status in DB
+            # Update user's biometric availability status and model in DB
             auth_manager.update_user_biometric_status(self.username, status=True)
+            auth_manager.save_face_model_to_db(self.username, blob)
             
             self.statusLabel.setText("Biometrics registered successfully.")
             QMessageBox.information(self, "Success", "Biometric data captured and saved.")
         else:
             self.statusLabel.setText("Failed to capture faces.")
             QMessageBox.warning(self, "Error", "No face detected. Please try again.")
-

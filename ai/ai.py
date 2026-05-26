@@ -2,9 +2,15 @@ import librosa
 import numpy as np
 from typing import Optional
 
+try:
+    from reedsolo import RSCodec
+    rs = RSCodec(10) # 10 ECC symbols
+except ImportError:
+    rs = None
+
 class AIManager:
     def __init__(self):
-        pass
+        self.fec_available = rs is not None
 
     def reduce_noise(self, audio_path: str) -> Optional[np.ndarray]:
         '''Mock AI noise reduction with librosa'''
@@ -31,11 +37,20 @@ class AIManager:
         except:
             return 0.0
 
+    def apply_fec(self, data: bytes) -> bytes:
+        """Applies Reed-Solomon Forward Error Correction."""
+        if rs:
+            return bytes(rs.encode(data))
+        return data
+
     def recover_errors(self, data: bytes) -> bytes:
-        """Mock AI-assisted error correction (e.g. Reed-Solomon/Forward Error Correction)."""
-        # In a real implementation this would use an ML model or Reed-Solomon code to fix bit flips.
-        # Here we just pass the data through to represent successful recovery of intact data.
-        print("AI: Applied error correction and signal reconstruction.")
+        """Real AI-assisted error correction (Reed-Solomon/Forward Error Correction)."""
+        if rs:
+            try:
+                decoded, _, _ = rs.decode(bytearray(data))
+                return bytes(decoded)
+            except Exception:
+                return data
         return data
 
     def evaluate_quality(self, audio_path: str) -> dict:
@@ -88,4 +103,3 @@ class AIManager:
         }
 
 ai_manager = AIManager()
-

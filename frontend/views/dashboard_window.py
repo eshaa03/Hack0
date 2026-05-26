@@ -17,19 +17,46 @@ from backend.blockchain import ledger
 class DashboardWindow(BaseWindow):
     def __init__(self):
         super().__init__("dashboard_fixed.ui")
+        from backend.audit import log_security_event
+        from frontend.session import session
+        log_security_event("System", "Dashboard Loaded", f"User accessed dashboard as {getattr(session, 'role', 'Guest')}")
         self.populate_data()
         self.connect_buttons()
         self.setup_telemetry_graphs()
         self.setup_timer()
 
     def populate_data(self):
-        self.recentActivityList.addItems(RECENT_ACTIVITY)
+        import os, glob
+        from frontend.views.frontend_data import RECENT_ACTIVITY
+        
+        log_dir = os.path.join(os.path.dirname(__file__), "..", "..", "logs")
+        logs = glob.glob(os.path.join(log_dir, "*.log"))
+        
+        new_items = []
+        if logs:
+            latest_log = max(logs, key=os.path.getctime)
+            try:
+                with open(latest_log, 'r') as f:
+                    lines = f.readlines()
+                    for line in reversed(lines[-25:]):
+                        if "SECURITY EVENT" in line:
+                            display = line.split("SECURITY EVENT | ")[-1]
+                        else:
+                            display = line.split(" - ")[-1]
+                        if display.strip():
+                            new_items.append(display.strip())
+            except Exception:
+                new_items = list(RECENT_ACTIVITY)
+        else:
+            new_items = list(RECENT_ACTIVITY)
+            
+        current_items = [self.recentActivityList.item(i).text() for i in range(self.recentActivityList.count())]
+        if current_items != new_items:
+            self.recentActivityList.clear()
+            for activity in new_items:
+                self.recentActivityList.addItem(activity)
 
     def connect_buttons(self):
-        self.dataEntryButton.setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px; background-color: #0056b3; color: white;")
-        self.recoveryButton.setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px; background-color: #28a745; color: white;")
-        self.monitoringButton.setStyleSheet("font-size: 14px; font-weight: bold; background-color: #6c757d; color: white; padding: 10px;")
-
         self.recoveryButton.clicked.connect(lambda: self.navigate_to(RecoveryWindow))
         self.dataEntryButton.clicked.connect(lambda: self.navigate_to(DataEntryWindow))
         self.monitoringButton.clicked.connect(lambda: self.navigate_to(QRGeneratorWindow))
@@ -48,11 +75,9 @@ class DashboardWindow(BaseWindow):
 
         # Admin Layout Elements
         self.myProfileButton = QPushButton("My Profile")
-        self.myProfileButton.setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px; background-color: #17a2b8; color: white;")
         self.myProfileButton.clicked.connect(self.show_my_profile)
 
         self.logoutButton = QPushButton("Secure Logout")
-        self.logoutButton.setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px; background-color: #dc3545; color: white;")
         self.logoutButton.clicked.connect(self.logout)
 
         layout = self.adminActionsLayout
@@ -62,14 +87,22 @@ class DashboardWindow(BaseWindow):
 
         if role == 'admin':
             self.manageRolesButton = QPushButton("Manage Roles (Admin)")
-            self.manageRolesButton.setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px; background-color: #6f42c1; color: white;")
             self.manageRolesButton.clicked.connect(self.show_system_roles)
             if layout:
                 layout.insertWidget(0, self.manageRolesButton)
 
     def show_system_roles(self):
-        from frontend.views.manage_users_window import ManageUsersWindow
-        self.navigate_to(ManageUsersWindow)
+        from PyQt5.QtWidgets import QInputDialog, QLineEdit, QMessageBox
+        pwd, ok = QInputDialog.getText(self, "Admin Authentication Required", "Please enter your admin password to access User Management:", QLineEdit.Password)
+        
+        if not ok or not pwd:
+            return
+            
+        if auth_manager.verify_password(pwd):
+            from frontend.views.manage_users_window import ManageUsersWindow
+            self.navigate_to(ManageUsersWindow)
+        else:
+            QMessageBox.critical(self, "Access Denied", "Incorrect password. The User Management console remains locked to prevent unauthorized modifications.")
 
     def show_my_profile(self):
         from frontend.views.profile_window import ProfileWindow
@@ -181,4 +214,7 @@ class DashboardWindow(BaseWindow):
         self.ram_curve.setData(self.t, self.ram_data)
         self.users_curve.setData(self.t, self.users_data)
         self.blockchain_curve.setData(self.t, self.blockchain_data)
+
+        # Update real-time activity log
+        self.populate_data()
 

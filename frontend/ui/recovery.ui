@@ -19,10 +19,10 @@
             <item><widget class="QPushButton" name="btnBrowseCarrier"><property name="text"><string>Browse...</string></property></widget></item>
            </layout>
           </item>
-          <item row="1" column="0"><widget class="QLabel" name="labelPayload"><property name="text"><string>Paste Raw Hex Payload</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="labelPayload"><property name="text"><string>Paste Raw Payload</string></property></widget></item>
           <item row="1" column="1">
             <widget class="QPlainTextEdit" name="rawPayloadInput">
-             <property name="placeholderText"><string>If you have raw extracted Hex payload (e.g. from Standalone QR), paste it here to skip carrier extraction...</string></property>
+             <property name="placeholderText"><string>If you have raw extracted Hex, HACK0B64, or HACK0HEX payload, paste it here to skip carrier extraction...</string></property>
              <property name="maximumHeight"><number>60</number></property>
             </widget>
           </item>
@@ -39,12 +39,7 @@
           <item><widget class="QLabel" name="pipelineLabel"><property name="text"><string>Recovery Pipeline</string></property></widget></item>
           <item><widget class="QListWidget" name="pipelineList"/></item>
           <item><widget class="QLabel" name="previewLabel"><property name="text"><string>Recovered Data Preview</string></property></widget></item>
-          <item><widget class="QPlainTextEdit" name="previewText"><property name="plainText"><string>CLASSIFIED COMMUNICATION
-=======================
-Mission Status: Complete
-Security Level: MAXIMUM
-Verification: PASSED
-[Additional data...]</string></property></widget></item>
+          <item><widget class="QPlainTextEdit" name="previewText"><property name="placeholderText"><string>Decoded actual payload will appear here...</string></property></widget></item>
          </layout>
         </widget>
        </item>

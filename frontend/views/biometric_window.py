@@ -4,14 +4,14 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMessageBox
 
 from frontend.views.base_window import BaseWindow
-from frontend.views.security_clearance_window import SecurityClearanceWindow
+from frontend.views.dashboard_window import DashboardWindow
 from backend.auth import auth_manager
 
 class BiometricWindow(BaseWindow):
     def __init__(self):
         super().__init__("biometric.ui")
         self.scanButton.clicked.connect(self.start_scan)
-        self.continueButton.clicked.connect(lambda: self.navigate_to(SecurityClearanceWindow))
+        self.continueButton.clicked.connect(lambda: self.navigate_to(DashboardWindow))
         self.continueButton.setEnabled(False)
         
         # Inject Back/Cancel Button
@@ -30,13 +30,19 @@ class BiometricWindow(BaseWindow):
         # Try to load model for current user
         user_id = getattr(auth_manager, 'current_user', None)
         if user_id:
-            model_path = os.path.join(os.path.dirname(__file__), "..", "..", "backend", f"{user_id}_face.yml")
-            if os.path.exists(model_path):
-                self.recognizer.read(model_path)
+            blob = auth_manager.get_face_model_from_db(user_id)
+            if blob:
+                import tempfile
+                fd, temp_path = tempfile.mkstemp(suffix=".yml")
+                os.write(fd, blob)
+                os.close(fd)
+                self.recognizer.read(temp_path)
+                os.remove(temp_path)
                 self.model_loaded = True
             else:
-                self.statusLabel.setText("No biometric model found for user.")
+                self.statusLabel.setText("No facial data found. You may proceed manually.")
                 self.scanButton.setEnabled(False)
+                self.continueButton.setEnabled(True)
 
     def start_scan(self) -> None:
         if not self.model_loaded:

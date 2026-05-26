@@ -6,36 +6,113 @@
   <property name="windowTitle"><string>Secure Sharing</string></property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin"><number>28</number></property>
+    <property name="topMargin"><number>24</number></property>
+    <property name="rightMargin"><number>28</number></property>
+    <property name="bottomMargin"><number>24</number></property>
+    <property name="spacing"><number>18</number></property>
     <item><widget class="QFrame" name="rootPanel">
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin"><number>26</number></property>
+      <property name="topMargin"><number>22</number></property>
+      <property name="rightMargin"><number>26</number></property>
+      <property name="bottomMargin"><number>22</number></property>
+      <property name="spacing"><number>16</number></property>
       <item><widget class="QLabel" name="titleLabel">
        <property name="text"><string>Secure Carrier Sharing</string></property>
+       <property name="alignment"><set>Qt::AlignCenter</set></property>
       </widget></item>
-      <item><widget class="QLabel" name="subtitleLabel">
-       <property name="text"><string>Export embedded carrier for secure transmission</string></property>
+      <item><widget class="QLabel" name="subTitleLabel">
+       <property name="text"><string>Choose a delivery route for the encrypted carrier and key package</string></property>
+       <property name="alignment"><set>Qt::AlignCenter</set></property>
       </widget></item>
-      <item><widget class="QFrame" name="card">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0"><widget class="QRadioButton" name="localExport">
-         <property name="text"><string>Local Export (USB/Offline)</string></property>
-         <property name="checked"><bool>true</bool></property>
-        </widget></item>
-        <item row="0" column="1"><widget class="QRadioButton" name="emailShare">
-         <property name="text"><string>Email Attachment</string></property>
-        </widget></item>
-        <item row="1" column="0"><widget class="QRadioButton" name="cloudShare">
-         <property name="text"><string>Cloud Storage</string></property>
-        </widget></item>
-        <item row="1" column="1"><widget class="QRadioButton" name="qrShare">
-         <property name="text"><string>QR Code Sharing</string></property>
-        </widget></item>
+      <item>
+       <layout class="QHBoxLayout" name="contentLayout">
+        <property name="spacing"><number>18</number></property>
+        <item>
+         <widget class="QFrame" name="handoffCard">
+          <property name="minimumSize"><size><width>380</width><height>0</height></size></property>
+          <layout class="QVBoxLayout" name="handoffLayout">
+           <property name="leftMargin"><number>20</number></property>
+           <property name="topMargin"><number>20</number></property>
+           <property name="rightMargin"><number>20</number></property>
+           <property name="bottomMargin"><number>20</number></property>
+           <property name="spacing"><number>14</number></property>
+           <item><widget class="QLabel" name="handoffTitleLabel">
+            <property name="text"><string>Handoff Package</string></property>
+           </widget></item>
+           <item><widget class="QLabel" name="carrierStateLabel">
+            <property name="text"><string>Carrier: waiting for embedded file</string></property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget></item>
+           <item><widget class="QLabel" name="keyStateLabel">
+            <property name="text"><string>Key: use the private key file saved during encryption</string></property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget></item>
+           <item><widget class="QLabel" name="integrityStateLabel">
+            <property name="text"><string>Integrity: keep the payload hash for recovery verification</string></property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget></item>
+           <item><widget class="QLabel" name="routeHintLabel">
+            <property name="text"><string>Offline export is the safest route. Email and LAN QR are available when the recipient needs a faster transfer.</string></property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget></item>
+           <item>
+            <spacer name="handoffSpacer">
+             <property name="orientation"><enum>Qt::Vertical</enum></property>
+             <property name="sizeType"><enum>QSizePolicy::Expanding</enum></property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="card">
+          <layout class="QVBoxLayout" name="routeLayout">
+           <property name="leftMargin"><number>22</number></property>
+           <property name="topMargin"><number>22</number></property>
+           <property name="rightMargin"><number>22</number></property>
+           <property name="bottomMargin"><number>22</number></property>
+           <property name="spacing"><number>14</number></property>
+           <item><widget class="QLabel" name="routeTitleLabel">
+            <property name="text"><string>Transmission Route</string></property>
+           </widget></item>
+           <item><widget class="QRadioButton" name="localExport">
+            <property name="text"><string>Local Export - USB / Offline Storage</string></property>
+            <property name="checked"><bool>true</bool></property>
+           </widget></item>
+           <item><widget class="QRadioButton" name="emailShare">
+            <property name="text"><string>Email Attachment - Send Carrier Package</string></property>
+           </widget></item>
+           <item><widget class="QRadioButton" name="cloudShare">
+            <property name="text"><string>Cloud Storage - External Link</string></property>
+           </widget></item>
+           <item><widget class="QRadioButton" name="qrShare">
+            <property name="text"><string>LAN QR Transfer - Nearby Device Download</string></property>
+           </widget></item>
+           <item><widget class="QLabel" name="routeDescriptionLabel">
+            <property name="text"><string>Choose a folder, then save the embedded carrier there for handoff.</string></property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget></item>
+           <item>
+            <spacer name="routeSpacer">
+             <property name="orientation"><enum>Qt::Vertical</enum></property>
+             <property name="sizeType"><enum>QSizePolicy::Expanding</enum></property>
+            </spacer>
+           </item>
+           <item><widget class="QPushButton" name="exportButton">
+            <property name="minimumSize"><size><width>0</width><height>48</height></size></property>
+            <property name="text"><string>Save Carrier Package</string></property>
+           </widget></item>
+          </layout>
+         </widget>
+        </item>
        </layout>
-      </widget></item>
-      <item><widget class="QPushButton" name="exportButton">
-       <property name="text"><string>Export Carrier</string></property>
-      </widget></item>
+      </item>
       <item><widget class="QLabel" name="statusLabel">
        <property name="text"><string>Ready to share embedded carrier file</string></property>
+       <property name="alignment"><set>Qt::AlignCenter</set></property>
+       <property name="wordWrap"><bool>true</bool></property>
       </widget></item>
       <item><widget class="QPushButton" name="backButton">
        <property name="text"><string>Back to Dashboard</string></property>
@@ -48,4 +125,3 @@
  <resources/>
  <connections/>
 </ui>
-

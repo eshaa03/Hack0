@@ -9,59 +9,47 @@ class EncoderModule:
         pass
 
     def encode_to_audio(self, data: bytes, output_path: str, sr: int = 44100):
-        """Encode binary data into a mock audio signal (FSK/ASK mock or pure digital noise).
-        Here we generate a simple audio signal representing the bytes.
+        """Encode binary data into a mock audio signal efficiently (PCM Amplitude).
+        Avoids massive memory allocations by using vectorised repeats instead of long FFT bins.
         """
-        # A simple method: mapping byte values to frequencies or just generating a noise signal
-        # For a robust implementation, real modulation (like FSK) is needed.
-        # This is a basic mock that creates a deterministic audio wave from bytes.
+        # Time-domain modulation: 1 byte = 4 samples to keep file small & memory safe
+        samples_per_byte = 4
         
-        # Fix mathematical resolution of FFT bins
-        duration = len(data) * 0.1 # 100ms per byte to achieve 10Hz FFT resolution
-        t = np.linspace(0, duration, int(sr * duration), False)
+        # Convert bytes to numpy uint8 array
+        arr = np.frombuffer(data, dtype=np.uint8)
         
-        # Create a base signal
-        signal = np.zeros_like(t)
-        samples_per_byte = int(sr * 0.1)
+        # Map 0-255 directly to Audio PCM floats [-1.0 to 1.0]
+        norm_arr = (arr.astype(np.float32) / 127.5) - 1.0
         
-        for i, byte in enumerate(data):
-            start = i * samples_per_byte
-            end = start + samples_per_byte
-            # Frequency based on byte value
-            freq = 1000 + (byte * 10) 
-            signal[start:end] = np.sin(2 * np.pi * freq * t[start:end])
-            
-        # Normalize
-        # Normalize
-        signal = signal / (np.max(np.abs(signal)) + 1e-9)
+        # Repeat each mapped float N times for signal integrity
+        signal = np.repeat(norm_arr, samples_per_byte)
+        
+        # Output directly to WAV
         sf.write(output_path, signal, sr, subtype='PCM_16')
         return output_path
 
     def decode_from_audio(self, input_path: str, sr: int = 44100):
         try:
-            y, _sr = librosa.load(input_path, sr=sr)
-            samples_per_byte = int(_sr * 0.1)
+            # We use soundfile to prevent librosa normalizations dropping resolution
+            y, _sr = sf.read(input_path)
+            if len(y.shape) > 1:
+                y = y[:, 0]  # Mono channel only
+                
+            samples_per_byte = 4
             num_bytes = len(y) // samples_per_byte
             
-            data = bytearray()
-            for i in range(num_bytes):
-                start = i * samples_per_byte
-                end = start + samples_per_byte
-                segment = y[start:end]
-                
-                # Check if segment is completely silent
-                if np.max(np.abs(segment)) < 1e-5:
-                    break
-                    
-                fft_vals = np.abs(np.fft.rfft(segment))
-                freqs = np.fft.rfftfreq(len(segment), 1/_sr)
-                peak_freq = freqs[np.argmax(fft_vals)]
-                
-                byte_val = int(round((peak_freq - 1000) / 10))
-                byte_val = max(0, min(255, byte_val))
-                data.append(byte_val)
-                
-            return bytes(data)
+            # Truncate to exact multiple
+            y_trunc = y[:num_bytes * samples_per_byte]
+            
+            # Reshape into chunks and mean pool
+            segments = y_trunc.reshape(-1, samples_per_byte)
+            means = np.mean(segments, axis=1)
+            
+            # Unmap back to 0-255 uint8 bounds
+            decoded = np.round((means + 1.0) * 127.5).astype(int)
+            decoded = np.clip(decoded, 0, 255).astype(np.uint8)
+            
+            return bytes(decoded)
         except Exception as e:
             print("Audio decode error:", e)
             return None

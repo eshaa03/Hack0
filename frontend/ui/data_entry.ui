@@ -17,122 +17,282 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QFrame" name="rootPanel">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       
-       <!-- Data Input Section -->
-       <item>
-        <widget class="QLabel" name="titleLabel">
-         <property name="text"><string>Step 1: Confidential Data Entry</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="dataTextEdit">
-         <property name="placeholderText"><string>Enter text to be encrypted here...</string></property>
-         <property name="maximumHeight"><number>100</number></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="fileButton">
-         <property name="text"><string>Attach File / Document</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="encryptButton">
-         <property name="text"><string>Encrypt Data (AES-GCM)</string></property>
-         <property name="styleSheet"><string>background-color: #dc3545; color: white; font-weight: bold;</string></property>
-        </widget>
-       </item>
-       
-       <!-- Hidden Crypto Details -->
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout1">
-            <item><widget class="QLabel" name="hashTitle"><property name="text"><string>Hash:</string></property></widget></item>
-            <item><widget class="QLabel" name="keyHashLabel"><property name="text"><string>N/A</string></property></widget></item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="encryptedHexEdit">
-           <property name="readOnly"><bool>true</bool></property>
-           <property name="placeholderText"><string>Encrypted Binary output (Hex) will appear here...</string></property>
-           <property name="maximumHeight"><number>60</number></property>
-        </widget>
-       </item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QFrame" name="pipelineHeaderFrame">
+          <property name="styleSheet"><string>background-color: #0f172a; border-bottom: 2px solid #38bdf8; margin-bottom: 20px; padding: 5px; border-radius: 6px;</string></property>
+          <property name="maximumHeight"><number>80</number></property>
+          <layout class="QHBoxLayout" name="horizontalLayoutHeader">
+           <property name="leftMargin"><number>20</number></property>
+           <property name="rightMargin"><number>20</number></property>
+           <item>
+            <widget class="QLabel" name="headerIcon">
+             <property name="text"><string>&lt;div style="font-size: 24px;"&gt;🚀&lt;/div&gt;</string></property>
+             <property name="maximumWidth"><number>40</number></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="headerTitle">
+             <property name="text"><string>&lt;h2 style="color: #f8fafc; margin: 0px;"&gt;Secure Transmission Pipeline&lt;/h2&gt;&lt;p style="color:#94a3b8; font-size: 13px; margin: 2px 0 0 0;"&gt;All outbound data passes through mandatory multi-layer AES-GCM &amp; LSB protection before leaving this terminal.&lt;/p&gt;</string></property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="headerSpacer">
+             <property name="orientation"><enum>Qt::Horizontal</enum></property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="statusPulseLabel">
+             <property name="text"><string>&lt;b style="color: #10b981; font-size: 14px;"&gt;● SYSTEM READY&lt;/b&gt;</string></property>
+             <property name="alignment"><set>Qt::AlignRight|Qt::AlignVCenter</set></property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutSteps">
 
-       <item>
-        <widget class="QLabel" name="rsaTitle">
-         <property name="text"><string>RSA Key Pair Generated:</string></property>
-         <property name="styleSheet"><string>color: gray; font-size: 10px;</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="rsaTextEdit">
-           <property name="readOnly"><bool>true</bool></property>
-           <property name="placeholderText"><string>RSA Public &amp; Private Keys will appear here...</string></property>
-           <property name="maximumHeight"><number>60</number></property>
-        </widget>
-       </item>
+          <!-- Column 1: Step 1 -->
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayoutStep1">
+            <item>
+             <widget class="QLabel" name="step1Label">
+              <property name="text"><string>&lt;h2 style="text-align:center;"&gt;Step 1: Confidential Data Entry &amp; Encryption&lt;/h2&gt;</string></property>
+              <property name="alignment"><set>Qt::AlignHCenter|Qt::AlignTop</set></property>
+              <property name="wordWrap"><bool>true</bool></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="cryptoFrame">
+              <property name="styleSheet"><string>QFrame#cryptoFrame { border: 2px solid #1E293B; border-radius: 8px; margin-top: 15px; }</string></property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <property name="leftMargin"><number>15</number></property>
+               <property name="topMargin"><number>15</number></property>
+               <property name="rightMargin"><number>15</number></property>
+               <property name="bottomMargin"><number>10</number></property>
+               <property name="spacing"><number>8</number></property>
+               <item>
+                <widget class="QTextEdit" name="dataTextEdit">
+                 <property name="placeholderText"><string>Enter text to be encrypted here...</string></property>
+                 <property name="maximumHeight"><number>120</number></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="fileButton">
+                 <property name="text"><string>Attach File / Document</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="encryptButton">
+                 <property name="text"><string>Encrypt Data (AES-GCM)</string></property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_Hash">
+                    <item><widget class="QLabel" name="hashTitle"><property name="maximumWidth"><number>40</number></property><property name="text"><string>&lt;b&gt;Hash:&lt;/b&gt;</string></property></widget></item>
+                    <item><widget class="QLabel" name="keyHashLabel"><property name="text"><string>N/A</string></property></widget></item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="encryptedHexEdit">
+                   <property name="readOnly"><bool>true</bool></property>
+                   <property name="placeholderText"><string>Encrypted Binary output (Hex) will appear here...</string></property>
+                   <property name="maximumHeight"><number>60</number></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="rsaTitle">
+                 <property name="text"><string>RSA Key Pair Generated:</string></property>
+                 <property name="styleSheet"><string>color: gray; font-size: 10px;</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="rsaTextEdit">
+                   <property name="readOnly"><bool>true</bool></property>
+                   <property name="placeholderText"><string>RSA Public &amp; Private Keys will appear here...</string></property>
+                   <property name="maximumHeight"><number>60</number></property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="innerSpacer1">
+                 <property name="orientation"><enum>Qt::Vertical</enum></property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
 
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation"><enum>Qt::Horizontal</enum></property>
-        </widget>
-       </item>
+          <!-- Column 2: Step 2 -->
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayoutStep2">
+            <item>
+             <widget class="QLabel" name="step2Label">
+              <property name="text"><string>&lt;h2 style="text-align:center;"&gt;Step 2: Generate Payload Encoding&lt;/h2&gt;</string></property>
+              <property name="alignment"><set>Qt::AlignHCenter|Qt::AlignTop</set></property>
+              <property name="wordWrap"><bool>true</bool></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="encodeFrame">
+              <property name="styleSheet"><string>QFrame#encodeFrame { border: 2px solid #1E293B; border-radius: 8px; margin-top: 15px; }</string></property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="leftMargin"><number>15</number></property>
+               <property name="topMargin"><number>15</number></property>
+               <property name="rightMargin"><number>15</number></property>
+               <property name="bottomMargin"><number>10</number></property>
+               <item>
+                <widget class="QComboBox" name="encodingCombo">
+                 <property name="styleSheet"><string>background-color: #0f172a; color: white;</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="generateButton">
+                 <property name="text"><string>Generate Encoding</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="qrPreview">
+                 <property name="text"><string>Preview generating...</string></property>
+                 <property name="alignment"><set>Qt::AlignCenter</set></property>
+                 <property name="minimumHeight"><number>120</number></property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="innerSpacer2">
+                 <property name="orientation"><enum>Qt::Vertical</enum></property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="tipFrame2">
+              <property name="styleSheet"><string>background-color: #1e293b; border-radius: 6px; padding: 10px; margin-top: 10px;</string></property>
+              <layout class="QVBoxLayout">
+               <item>
+                <widget class="QLabel" name="tipLabel2">
+                 <property name="text"><string>&lt;b style="color:#38bdf8;"&gt;💡 Pro-Tip:&lt;/b&gt;&lt;br/&gt;Our high-density error correction allows the QR code to withstand up to 30% distortion without any data loss. Always verify your encoding format before printing.</string></property>
+                 <property name="wordWrap"><bool>true</bool></property>
+                 <property name="styleSheet"><string>color: #94a3b8; font-size: 13px;</string></property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
 
-       <!-- Encoding Section -->
-       <item>
-        <widget class="QLabel" name="encodeTitle">
-         <property name="text"><string>Step 2: Generate Payload</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="encodingCombo">
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="generateButton">
-         <property name="text"><string>Generate Encoding</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qrPreview">
-         <property name="text"><string>Preview generating...</string></property>
-         <property name="alignment"><set>Qt::AlignCenter</set></property>
-         <property name="minimumHeight"><number>200</number></property>
-        </widget>
-       </item>
+          <!-- Column 3: Step 3 -->
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayoutStep3">
+            <item>
+             <widget class="QLabel" name="step3Label">
+              <property name="text"><string>&lt;h2 style="text-align:center;"&gt;Step 3: Steganography &amp; Export&lt;/h2&gt;</string></property>
+              <property name="alignment"><set>Qt::AlignHCenter|Qt::AlignTop</set></property>
+              <property name="wordWrap"><bool>true</bool></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="stegoFrame">
+              <property name="styleSheet"><string>QFrame#stegoFrame { border: 2px solid #1E293B; border-radius: 8px; margin-top: 15px; }</string></property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="leftMargin"><number>15</number></property>
+               <property name="topMargin"><number>15</number></property>
+               <property name="rightMargin"><number>15</number></property>
+               <property name="bottomMargin"><number>10</number></property>
+               <item>
+                <widget class="QPushButton" name="embedButton">
+                 <property name="text"><string>Embed inside Carrier Image/Audio</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QProgressBar" name="progressBar">
+                 <property name="value"><number>0</number></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="statusLabel">
+                 <property name="text"><string>Ready for input.</string></property>
+                 <property name="alignment"><set>Qt::AlignCenter</set></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="qrButton">
+                 <property name="text"><string>Finish -&gt; Share Carrier</string></property>
+                 <property name="styleSheet"><string>background-color: #28a745; color: white;</string></property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="innerSpacer3">
+                 <property name="orientation"><enum>Qt::Vertical</enum></property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="tipFrame3">
+              <property name="styleSheet"><string>background-color: #1e293b; border-radius: 6px; padding: 10px; margin-top: 10px;</string></property>
+              <layout class="QVBoxLayout">
+               <item>
+                <widget class="QLabel" name="shieldIcon">
+                 <property name="text"><string>&lt;div align="center" style="font-size: 28px; color: #10b981;"&gt;🛡️&lt;/div&gt;</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="tipLabel3">
+                 <property name="text"><string>&lt;b style="color:#10b981;"&gt;Anti-Forensics Active&lt;/b&gt;&lt;br/&gt;The carrier file remains perceptually identical to the original. Statistical analysis techniques will fail to identify the embedded LSB payload.</string></property>
+                 <property name="alignment"><set>Qt::AlignHCenter|Qt::AlignTop</set></property>
+                 <property name="wordWrap"><bool>true</bool></property>
+                 <property name="styleSheet"><string>color: #94a3b8; font-size: 13px;</string></property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
 
-       <!-- Steganography Section -->
-       <item>
-        <widget class="QPushButton" name="embedButton">
-         <property name="text"><string>Step 3: Embed inside Carrier Image/Audio</string></property>
-         <property name="styleSheet"><string>background-color: #ffc107; color: black; font-weight: bold;</string></property>
-        </widget>
-       </item>
+           </layout>
+          </item>
+          
+         </layout>
+        </item>
 
-       <item>
-        <widget class="QProgressBar" name="progressBar">
-         <property name="value"><number>0</number></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="statusLabel">
-         <property name="text"><string>Ready for input.</string></property>
-        </widget>
-       </item>
-       
-       <!-- Navigation -->
-       <item>
-        <widget class="QPushButton" name="qrButton">
-         <property name="text"><string>Finish -&gt; Share Carrier</string></property>
-         <property name="styleSheet"><string>background-color: #28a745; color: white; font-weight: bold;</string></property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="backButton">
-         <property name="text"><string>Back to Dashboard</string></property>
-        </widget>
-       </item>
-      </layout>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation"><enum>Qt::Vertical</enum></property>
+          <property name="sizeType"><enum>QSizePolicy::Expanding</enum></property>
+         </spacer>
+        </item>
+
+        <!-- Navigation -->
+        <item>
+         <widget class="QPushButton" name="backButton">
+          <property name="text"><string>Back to Dashboard</string></property>
+         </widget>
+        </item>
+
+       </layout>
      </widget>
     </item>
    </layout>

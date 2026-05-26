@@ -9,13 +9,31 @@ class QRGeneratorWindow(BaseWindow):
     def __init__(self):
         super().__init__("qr_generator.ui")
         self.current_qr_img = None
-        self.generateButton.clicked.connect(self.generate_standalone_qr)
-        self.saveButton.clicked.connect(self.save_qr_image)
-        self.backButton.clicked.connect(self.go_back)
+        from PyQt5.QtWidgets import QPushButton, QStyle
 
-        from PyQt5.QtWidgets import QPushButton
+        from PyQt5.QtGui import QIcon, QPixmap, QPainter
+        from PyQt5.QtCore import Qt
+        
+        def get_text_color_icon(standard_icon):
+            pixmap = self.style().standardIcon(standard_icon).pixmap(24, 24)
+            painter = QPainter(pixmap)
+            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+            painter.fillRect(pixmap.rect(), Qt.white)
+            painter.end()
+            return QIcon(pixmap)
+
+        self.generateButton.clicked.connect(self.generate_standalone_qr)
+        self.generateButton.setIcon(get_text_color_icon(QStyle.SP_FileDialogDetailedView))
+
+        self.saveButton.clicked.connect(self.save_qr_image)
+        self.saveButton.setIcon(get_text_color_icon(QStyle.SP_DialogSaveButton))
+        self.saveButton.setStyleSheet("background-color: #28a745; color: white;")
+
+        self.backButton.clicked.connect(self.go_back)
+        self.backButton.setIcon(get_text_color_icon(QStyle.SP_ArrowBack))
+
         self.fileButton = QPushButton("Attach File Instead")
-        self.fileButton.setStyleSheet("background-color: #6f42c1; color: white; font-weight: bold; padding: 5px;")
+        self.fileButton.setIcon(get_text_color_icon(QStyle.SP_FileIcon))
         layout = self.generateButton.parent().layout()
         if layout:
             idx = layout.indexOf(self.generateButton)

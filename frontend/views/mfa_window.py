@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QPushButton
 from PyQt5.QtCore import QTimer
 import pyotp
 
 from frontend.views.base_window import BaseWindow
 from frontend.views.biometric_window import BiometricWindow
+from frontend.views.dashboard_window import DashboardWindow
 from backend.auth import auth_manager
 from frontend.session import session
 from backend.network_utils import is_online, send_real_email, send_real_sms
@@ -14,7 +15,6 @@ class MFAWindow(BaseWindow):
         self.verifyButton.clicked.connect(self.verify_code)
         
         # Inject Back/Cancel Button
-        from PyQt5.QtWidgets import QPushButton
         self.cancelButton = QPushButton("Cancel Authentication (Back)")
         self.cancelButton.setStyleSheet("background-color: #dc3545; color: white; padding: 10px; font-weight: bold;")
         layout = self.verifyButton.parent().layout()
@@ -25,7 +25,19 @@ class MFAWindow(BaseWindow):
         if hasattr(self, 'titleLabel'):
             self.titleLabel.setText("Real-Time MFA")
             
+        self.otp_timer = QTimer(self)
+        self.otp_timer.timeout.connect(self.update_timer)
+        self.otp_timer.start(1000)
+            
         QTimer.singleShot(100, self.dispatch_otp)
+
+    def update_timer(self):
+        import time
+        remaining = 30 - (int(time.time()) % 30)
+        if hasattr(self, 'statusLabel'):
+            current_text = self.statusLabel.text()
+            if any(word in current_text for word in ["dispatched", "OTP", "Awaiting"]):
+                new_text = current_text.rsplit(' (', 1)[0] if ' (' in current_text else current_text
 
     def dispatch_otp(self):
         user_data = auth_manager.get_current_user_data()
@@ -36,26 +48,21 @@ class MFAWindow(BaseWindow):
         totp = pyotp.TOTP(user_data["totp_secret"]).now()
         phone = user_data.get("phone_number")
         email = user_data.get("email")
-
-        role = user_data.get("role")
-
-        if role == "admin":
-            QMessageBox.critical(self, "Admin Policy Enforcement", f"Outbound SMS/Email strictly disabled for Administrator roles to prevent interception attacks.\n\nPlease generate the localized code using your Offline Authenticator App.\n\n[Dev Bypass OTP: {totp}]")
-            self.statusLabel.setText("Awaiting Admin Authenticator App Code...")
-        elif is_online():
-            QMessageBox.information(self, "MFA Transport", "System Online. Attempting to dispatch real SMS and Email dispatch using API Keys...")
-            sms_sent = send_real_sms(phone, totp)
+        if is_online():
+            # Email only
             email_sent = send_real_email(email, totp)
-            
-            if sms_sent or email_sent:
-                self.statusLabel.setText("OTP dispatched to external devices successfully.")
+            if email_sent:
+                self.statusLabel.setText("OTP dispatched by Email.")
             else:
-                self.statusLabel.setText("System Online but API Secrets Missing in .env.")
-                # Show OTP locally if they didn't fill .env to avoid being locked out
-                QMessageBox.warning(self, "Missing Credentials", f"Failed to send to real APIs due to empty .env variables. However, the system evaluated successfully.\nLocal Bypass OTP is: {totp}")
+                self.statusLabel.setText("Email failed. Use Authenticator app.")
+                QMessageBox.warning(
+                    self,
+                    "Email Failed",
+                    "\nLocal TOTP: " + totp
+                )
         else:
-            QMessageBox.warning(self, "Offline Mode", "System Offline. Outbound SMS/Email unavailable. Use your registered Authenticator App for local TOTP.")
-            self.statusLabel.setText("Awaiting generalized Authenticator App code...")
+            QMessageBox.warning(self, "Offline Mode", "Offline. Use Authenticator TOTP.")
+            self.statusLabel.setText("Awaiting authenticator app code...")
 
     def verify_code(self) -> None:
         code = self.otpInput.text().strip()
@@ -66,8 +73,7 @@ class MFAWindow(BaseWindow):
             if user_data and user_data.get("has_biometric", False):
                 self.navigate_to(BiometricWindow)
             else:
-                from frontend.views.security_clearance_window import SecurityClearanceWindow
-                self.navigate_to(SecurityClearanceWindow)
+                self.navigate_to(DashboardWindow)
         else:
             self.statusLabel.setText("Invalid OTP.")
 

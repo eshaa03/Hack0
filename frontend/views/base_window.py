@@ -5,6 +5,7 @@ from typing import Type
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.QtCore import Qt
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -29,5 +30,22 @@ class BaseWindow(QMainWindow):
 
     def navigate_to(self, window_cls: Type[QWidget]) -> None:
         self._next_window = window_cls()
-        self._next_window.show()
+        self._next_window.setGeometry(self.geometry())
+        if self.isMaximized():
+            self._next_window.showMaximized()
+        elif self.isFullScreen():
+            self._next_window.showFullScreen()
+        else:
+            self._next_window.show()
         self.close()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            from PyQt5.QtWidgets import QTextEdit, QPlainTextEdit
+            focused = self.focusWidget()
+            if isinstance(focused, (QTextEdit, QPlainTextEdit)):
+                super().keyPressEvent(event)
+            else:
+                self.focusNextChild()
+        else:
+            super().keyPressEvent(event)
